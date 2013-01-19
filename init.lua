@@ -40,12 +40,9 @@ function init()
 	tbltrap[1]["x"] = 0
 	tbltrap[1]["y"] = 0
 	tbltrap[1]["enabled"] = false --enabled?
-	tbltrap[1]["attr"] = 0 -- attribute. fire? cog? 0: moving fire 1: cog 2: prototype cog 3: static fire
-	tbltrap[1]["direction"] = 0 -- head right:0 head left: 1
+	tbltrap[1]["kind"] = 0 -- kind. fire
+	tbltrap[1]["direction"] = 0 -- to right:0 to left: 1 to up: 2 to down: 3
 	tbltrap[1]["animation"] = 0 -- Animation. we have 2 frame per one trap.
-	-- original coordinates of trap, moving fire need it.
-	tbltrap[1]["startx"] = 0
-	tbltrap[1]["starty"] = 0
 	
 	-- start point and goal
 	-- start point X/Y

@@ -8,21 +8,22 @@ require "init" -- init everything
 require "debris" -- manage debris
 require "collision" -- detect and respond to collision
 require "map" --about map
+require "trap" --about trap
 
 init() --init everything.
 loadmap("asdf.txt") --load example map. "asdf.txt"
-newdebris(48 * 3, 48 * 1, 0)
-newdebris(48 * 6, 48 * 1, 1)
+newtrap(0,0,2,0)
+tbltrap[1]["animation"] = 0
 
 function love.load()
-	local a
+	local a, b
 
 	-- load image
 	imgchar = love.graphics.newImage("Graphics/can_sprite.png") -- load player sprite
 	imgdeb = love.graphics.newImage("Graphics/debris_sprite.png") -- load debris sprite
     imgtile = love.graphics.newImage("Graphics/tile.png") --load tile graphic
 	imgpoints = love.graphics.newImage("Graphics/points.png") --load start/goal points
-	
+	imgtraps = love.graphics.newImage("Graphics/traps.png") --load trap sprite
 	
 	-- quad to draw player
 	quadchar = {}
@@ -44,19 +45,16 @@ function love.load()
 	
 	-- quad to draw start point/goal
 	quadpoints = {}
-	quadpoints[1] = love.graphics.newQuad(0, 0, TILESIZE, TILESIZE, 96, 48)
-	quadpoints[2] = love.graphics.newQuad(48, 0, TILESIZE, TILESIZE, 96, 48)
+	quadpoints[1] = love.graphics.newQuad(0, 0, TILESIZE, TILESIZE, TILESIZE * 2, TILESIZE)
+	quadpoints[2] = love.graphics.newQuad(TILESIZE, 0, TILESIZE, TILESIZE, TILESIZE * 2, TILESIZE)
 	
-	--[[
 	-- quad to draw trap
 	quadtrap = {}
-    for a = 1, 8 do
-        quadtrap[a] = love.graphics.newQuad(48 * (a - 1), 0, TILESIZE, TILESIZE, 384, 96)
-    end
-	for a = 1, 6 do
-        quadtrap[a + 8] = love.graphics.newQuad(48 * (a - 1), 48, TILESIZE, TILESIZE, 384, 96)
-    end
-	]]--
+    for a = 1, 3 do
+		for b = 1, 2 do
+			quadtrap[a * 2 + b - 2] = love.graphics.newQuad(CHARSIZE * (b - 1), CHARSIZE * (a - 1), CHARSIZE, CHARSIZE, CHARSIZE * 2, CHARSIZE * 3)
+		end
+	end
 	
 end
 
@@ -80,6 +78,13 @@ function love.draw()
 	for a = 1, #tbldebris do
 		if tbldebris[a]["enabled"] == true then
 			love.graphics.drawq(imgdeb, quaddeb[(tbldebris[a]["direction"] * 3) + 1 + tbldebris[a]["damage"]], tbldebris[a]["x"], tbldebris[a]["y"])
+		end
+	end
+	
+	--draw traps
+	for a = 1, #tbltrap do
+		if tbltrap[a]["enabled"] == true then
+			love.graphics.drawq(imgtraps, quadtrap[tbltrap[a]["kind"] * 2 + 1 + tbltrap[a]["animation"]], tbltrap[a]["x"], tbltrap[a]["y"])
 		end
 	end
 	
@@ -184,7 +189,7 @@ function love.update(dt)
 		tmrjump = 0
 	end
 	
-	-- change animation of player, 300ms per 1 frame.
+	-- change animation of player/trap, 300ms per 1 frame.
 	tmranimation = tmranimation + dt
 	if tmranimation >= 0.3 then
 		tmranimation = tmranimation - 0.3
@@ -197,6 +202,17 @@ function love.update(dt)
 			end
 		else
 			player["motion"] = 0
+		end
+		
+		for a = 1, #tbltrap do
+			-- toggle varible "animation" between 0 and 1
+			if tbltrap[a]["enabled"] == true then
+				if tbltrap[a]["animation"] == 0 then
+					tbltrap[a]["animation"] = 1
+				elseif tbltrap[a]["animation"] == 1 then
+					tbltrap[a]["animation"] = 0
+				end
+			end
 		end
 	end
 end
