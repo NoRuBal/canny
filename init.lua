@@ -40,7 +40,7 @@ function init()
 	tbltrap[1]["x"] = 0
 	tbltrap[1]["y"] = 0
 	tbltrap[1]["enabled"] = false --enabled?
-	tbltrap[1]["kind"] = 0 -- kind. fire
+	tbltrap[1]["kind"] = 0 -- kind. fire: 0 proto-cog: 1 cog: 2
 	tbltrap[1]["direction"] = 0 -- to right:0 to left: 1 to up: 2 to down: 3
 	tbltrap[1]["animation"] = 0 -- Animation. we have 2 frame per one trap.
 	
@@ -58,7 +58,8 @@ function init()
 	tmrjump = 0
 	tmranimation = 0
 	tmrtrapanimation = 0
-
+	tmrmovetrap = 0
+	
 	-- set key repeat
 	love.keyboard.setKeyRepeat(0.1, 0.1)
 end

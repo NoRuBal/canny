@@ -36,14 +36,14 @@ function loadmap(mappath)
 	-- parse start point data
 	data = {}
 	data = split(mapdata[2], ":")
-	startx = data[1]
-	starty = data[2]
+	startx = tonumber(data[1])
+	starty = tonumber(data[2])
 	
 	-- parse goal data
 	data = {}
 	data = split(mapdata[3], ":")
-	endx = data[1]
-	endy = data[2]
+	endx = tonumber(data[1])
+	endy = tonumber(data[2])
 	
 	-- set player start point
 	player["x"] = startx * 48

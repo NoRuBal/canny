@@ -12,8 +12,15 @@ require "trap" --about trap
 
 init() --init everything.
 loadmap("asdf.txt") --load example map. "asdf.txt"
-newtrap(0,0,2,0)
+newtrap(48*3,48*1 + 4,2,0)
+newtrap(48*9,48*5 + 4,2,0)
+newtrap(48*10,48*8 + 4,0,0)
+newtrap(48*5,48*8 + 4,0,0)
+newtrap(48*3,48*8 + 4,0,0)
+newdebris(48 * 5, 48 * 1, 0)
 tbltrap[1]["animation"] = 0
+endx = 1
+endy = 8
 
 function love.load()
 	local a, b
@@ -126,6 +133,21 @@ function love.update(dt)
 	if love.keyboard.isDown("right") then
 		player["direction"] = 0
 		charmove("right", 100 * dt)
+	end
+	
+	-- move traps
+	for a = 1, #tbltrap do
+		if tbltrap[a]["enabled"] == true then
+			if tbltrap[a]["direction"] == 0 then --right
+				trapmove("right", 100 * dt, a)
+			elseif tbltrap[a]["direction"] == 1 then --left
+				trapmove("left", 100 * dt, a)
+			elseif tbltrap[a]["direction"] == 2 then --up
+				trapmove("up", 100 * dt, a)
+			elseif tbltrap[a]["direction"] == 3 then --down
+				trapmove("down", 100 * dt, a)
+			end
+		end
 	end
 	
 	--jump

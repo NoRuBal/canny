@@ -1,0 +1,7 @@
+[*] move trap
+[*] collision detection of trap
+[ ] creation of trap from trap source
+
+Bugs:
+[ ] when debris chrashes, another debris crashes together.
+[ ] if you move debris through fire, debris dosen't harm
