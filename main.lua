@@ -15,10 +15,9 @@ loadmap("asdf.txt") --load example map. "asdf.txt"
 newtrap(48*3,48*1 + 4,2,0)
 newtrap(48*9,48*5 + 4,2,0)
 newtrap(48*10,48*8 + 4,0,0)
-newtrap(48*5,48*8 + 4,0,0)
+newtrap(48*5,48*8 + 4,0,3)
 newtrap(48*3,48*8 + 4,0,0)
-newdebris(48 * 5, 48 * 1, 0)
-tbltrap[1]["animation"] = 0
+newdebris(48 * 6, 48 * 8, 0)
 endx = 1
 endy = 8
 

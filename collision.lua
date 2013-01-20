@@ -3,7 +3,6 @@
 -- check and respond to collision.
 --------------------------------
 
-
 function objtocorner(x, y, direction) --returns four corner of rect.
 	if direction == "leftup" or direction == 0 then
 		return x, y
@@ -179,15 +178,24 @@ function debmove(direction, speed, index) -- move debris.
 		for a = 1, #tbltrap do
 			if tbltrap[a]["enabled"] == true then
 				if collcheck(fakex, fakey, CHARSIZE, CHARSIZE, tbltrap[a]["x"], tbltrap[a]["y"], CHARSIZE, CHARSIZE) == true then
-					tbldebris[index]["damage"] = tbldebris[index]["damage"] + 1
-					if tbldebris[index]["damage"] == 3 then
-						tbldebris[index]["enabled"] = false
-						-- maybe eff..
+					if tbltrap[a]["kind"] == 0 then --get damage with only static traps
+						tbldebris[index]["damage"] = tbldebris[index]["damage"] + 1
+						if tbldebris[index]["damage"] == 3 then
+							tbldebris[index]["enabled"] = false
+							-- maybe eff..
+						end
 					end
 					trapcollide(a)
 					fakey = tbltrap[a]["y"] + CHARSIZE
 				end
 			end
+		end
+		
+		-- no collision with doors
+		if collcheck(tbldebris[index]["x"], tbldebris[index]["y"], CHARSIZE, CHARSIZE, startx, starty, TILESIZE, TILESIZE) == true then
+			fakey = starty * 48 + CHARSIZE
+		elseif collcheck(tbldebris[index]["x"], tbldebris[index]["y"], CHARSIZE, CHARSIZE, endx, endy, TILESIZE, TILESIZE) == true then
+			fakey = endy * 48 + CHARSIZE
 		end
 		
 		tbldebris[index]["y"] = fakey
@@ -213,15 +221,24 @@ function debmove(direction, speed, index) -- move debris.
 		for a = 1, #tbltrap do
 			if tbltrap[a]["enabled"] == true then
 				if collcheck(fakex, fakey, CHARSIZE, CHARSIZE, tbltrap[a]["x"], tbltrap[a]["y"], CHARSIZE, CHARSIZE) == true then
-					tbldebris[index]["damage"] = tbldebris[index]["damage"] + 1
-					if tbldebris[index]["damage"] == 3 then
-						tbldebris[index]["enabled"] = false
-						-- maybe eff..
+					if tbltrap[a]["kind"] == 0 then --get damage with only static traps
+						tbldebris[index]["damage"] = tbldebris[index]["damage"] + 1
+						if tbldebris[index]["damage"] == 3 then
+							tbldebris[index]["enabled"] = false
+							-- maybe eff..
+						end
 					end
 					trapcollide(a)
 					fakey = tbltrap[a]["y"] - CHARSIZE
 				end
 			end
+		end
+		
+		-- no collision with doors
+		if collcheck(tbldebris[index]["x"], tbldebris[index]["y"], CHARSIZE, CHARSIZE, startx, starty, TILESIZE, TILESIZE) == true then
+			fakey = starty * 48 - CHARSIZE
+		elseif collcheck(tbldebris[index]["x"], tbldebris[index]["y"], CHARSIZE, CHARSIZE, endx, endy, TILESIZE, TILESIZE) == true then
+			fakey = endy * 48 - CHARSIZE
 		end
 		
 		tbldebris[index]["y"] = fakey
@@ -248,15 +265,24 @@ function debmove(direction, speed, index) -- move debris.
 		for a = 1, #tbltrap do
 			if tbltrap[a]["enabled"] == true then
 				if collcheck(fakex, fakey, CHARSIZE, CHARSIZE, tbltrap[a]["x"], tbltrap[a]["y"], CHARSIZE, CHARSIZE) == true then
-					tbldebris[index]["damage"] = tbldebris[index]["damage"] + 1
-					if tbldebris[index]["damage"] == 3 then
-						tbldebris[index]["enabled"] = false
-						-- maybe eff..
+					if tbltrap[a]["kind"] == 0 then --get damage with only static traps
+						tbldebris[index]["damage"] = tbldebris[index]["damage"] + 1
+						if tbldebris[index]["damage"] == 3 then
+							tbldebris[index]["enabled"] = false
+							-- maybe eff..
+						end
 					end
 					trapcollide(a)
 					fakex = tbltrap[a]["x"] + CHARSIZE
 				end
 			end
+		end
+		
+		-- no collision with doors
+		if collcheck(tbldebris[index]["x"], tbldebris[index]["y"], CHARSIZE, CHARSIZE, startx, starty, TILESIZE, TILESIZE) == true then
+			fakex = startx * 48 + CHARSIZE
+		elseif collcheck(tbldebris[index]["x"], tbldebris[index]["y"], CHARSIZE, CHARSIZE, endx, endy, TILESIZE, TILESIZE) == true then
+			fakex = endx * 48 + CHARSIZE
 		end
 		
 		tbldebris[index]["x"] = fakex
@@ -283,15 +309,24 @@ function debmove(direction, speed, index) -- move debris.
 		for a = 1, #tbltrap do
 			if tbltrap[a]["enabled"] == true then
 				if collcheck(fakex, fakey, CHARSIZE, CHARSIZE, tbltrap[a]["x"], tbltrap[a]["y"], CHARSIZE, CHARSIZE) == true then
-					tbldebris[index]["damage"] = tbldebris[index]["damage"] + 1
-					if tbldebris[index]["damage"] == 3 then
-						tbldebris[index]["enabled"] = false
-						-- maybe eff..
+					if tbltrap[a]["kind"] == 0 then --get damage with only static traps
+						tbldebris[index]["damage"] = tbldebris[index]["damage"] + 1
+						if tbldebris[index]["damage"] == 3 then
+							tbldebris[index]["enabled"] = false
+							-- maybe eff..
+						end
 					end
 					trapcollide(a)
 					fakex = tbltrap[a]["x"] - CHARSIZE
 				end
 			end
+		end
+		
+		-- no collision with doors
+		if collcheck(tbldebris[index]["x"], tbldebris[index]["y"], CHARSIZE, CHARSIZE, startx, starty, TILESIZE, TILESIZE) == true then
+			fakex = startx * 48 - CHARSIZE
+		elseif collcheck(tbldebris[index]["x"], tbldebris[index]["y"], CHARSIZE, CHARSIZE, endx, endy, TILESIZE, TILESIZE) == true then
+			fakex = endx * 48 - CHARSIZE
 		end
 		
 		tbldebris[index]["x"] = fakex
@@ -371,10 +406,12 @@ function trapmove(direction, speed, index) --move trap.
 		-- collide with player..
 		if collcheck(fakex, fakey, CHARSIZE, CHARSIZE, player["x"], player["y"], CHARSIZE, CHARSIZE) == true then
 			fakey = player["y"] + CHARSIZE
-			newdebris(player["x"], player["y"], player["direction"])
-			player["x"] = startx * 48
-			player["y"] = starty * 48
-			-- eff..
+			if collcheck(startx * TILESIZE, starty * TILESIZE, TILESIZE, TILESIZE, player["x"], player["y"], CHARSIZE, CHARSIZE) == false then
+				newdebris(player["x"], player["y"], player["direction"])
+				player["x"] = startx * 48
+				player["y"] = starty * 48
+				-- eff..
+			end
 			trapcollide(index)
 		 end
 		
@@ -411,10 +448,12 @@ function trapmove(direction, speed, index) --move trap.
 		-- with player
 		if collcheck(fakex, fakey, CHARSIZE, CHARSIZE, player["x"], player["y"], CHARSIZE, CHARSIZE) == true then
 			fakey = player["y"] - CHARSIZE
-			newdebris(player["x"], player["y"], player["direction"])
-			player["x"] = startx * 48
-			player["y"] = starty * 48
-			-- eff..
+			if collcheck(startx * TILESIZE, starty * TILESIZE, TILESIZE, TILESIZE, player["x"], player["y"], CHARSIZE, CHARSIZE) == false then
+				newdebris(player["x"], player["y"], player["direction"])
+				player["x"] = startx * 48
+				player["y"] = starty * 48
+				-- eff..
+			end
 			trapcollide(index)
 		 end
 		
@@ -453,10 +492,12 @@ function trapmove(direction, speed, index) --move trap.
 		 -- with player
 		 if collcheck(fakex, fakey, CHARSIZE, CHARSIZE, player["x"], player["y"], CHARSIZE, CHARSIZE) == true then
 			fakex = player["x"] + CHARSIZE
-			newdebris(player["x"], player["y"], player["direction"])
-			player["x"] = startx * 48
-			player["y"] = starty * 48
-			-- eff..
+			if collcheck(startx * TILESIZE, starty * TILESIZE, TILESIZE, TILESIZE, player["x"], player["y"], CHARSIZE, CHARSIZE) == false then
+				newdebris(player["x"], player["y"], player["direction"])
+				player["x"] = startx * 48
+				player["y"] = starty * 48
+				-- eff..
+			end
 			trapcollide(index)
 		 end
 		
@@ -495,10 +536,12 @@ function trapmove(direction, speed, index) --move trap.
 		-- with player
 		if collcheck(fakex, fakey, CHARSIZE, CHARSIZE, player["x"], player["y"], CHARSIZE, CHARSIZE) == true then
 			fakex = player["x"] - CHARSIZE
-			newdebris(player["x"], player["y"], player["direction"])
-			player["x"] = startx * 48
-			player["y"] = starty * 48
-			-- eff..
+			if collcheck(startx * TILESIZE, starty * TILESIZE, TILESIZE, TILESIZE, player["x"], player["y"], CHARSIZE, CHARSIZE) == false then
+				newdebris(player["x"], player["y"], player["direction"])
+				player["x"] = startx * 48
+				player["y"] = starty * 48
+				-- eff..
+			end
 			trapcollide(index)
 		 end
 		

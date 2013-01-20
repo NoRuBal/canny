@@ -1,3 +1,14 @@
-[ ] move trap
-[ ] collision detection of trap
+[*] move trap
+[*] collision detection of trap
+[*] player is invincible when it collide with start door
+[*] collision detection of debris - with gates
 [ ] creation of trap from trap source
+[ ] lava tile
+[ ] conveyor belt
+[ ] effect
+[ ] map decoration, background
+[ ] map editor changing
+
+Bugs:
+[*] when debris chrashes, another debris crashes together.
+[*] if you move debris through fire, debris dosen't get harm
