@@ -24,6 +24,8 @@ function init()
 	player["jump"] = false --jumping?
 	player["direction"] = 0 --heading left: 0 head right:1
 	player["motion"] = 0 --motion for animation. 0:stopped 1: right foot 2:stopped 3: left foot
+	player["blink"] = false
+	player["blinktime"] = 0
 
 	-- debris table
 	tbldebris = {}
@@ -59,6 +61,7 @@ function init()
 	tmranimation = 0
 	tmrtrapanimation = 0
 	tmrmovetrap = 0
+	tmrblink = 0
 	
 	-- set key repeat
 	love.keyboard.setKeyRepeat(0.1, 0.1)

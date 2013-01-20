@@ -411,6 +411,8 @@ function trapmove(direction, speed, index) --move trap.
 				player["x"] = startx * 48
 				player["y"] = starty * 48
 				-- eff..
+				player["blink"] = true
+				player["blinktime"] = 5
 			end
 			trapcollide(index)
 		 end
@@ -453,6 +455,8 @@ function trapmove(direction, speed, index) --move trap.
 				player["x"] = startx * 48
 				player["y"] = starty * 48
 				-- eff..
+				player["blink"] = true
+				player["blinktime"] = 5
 			end
 			trapcollide(index)
 		 end
@@ -497,6 +501,8 @@ function trapmove(direction, speed, index) --move trap.
 				player["x"] = startx * 48
 				player["y"] = starty * 48
 				-- eff..
+				player["blink"] = true
+				player["blinktime"] = 5
 			end
 			trapcollide(index)
 		 end
@@ -541,6 +547,8 @@ function trapmove(direction, speed, index) --move trap.
 				player["x"] = startx * 48
 				player["y"] = starty * 48
 				-- eff..
+				player["blink"] = true
+				player["blinktime"] = 5
 			end
 			trapcollide(index)
 		 end

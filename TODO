@@ -2,10 +2,12 @@
 [*] collision detection of trap
 [*] player is invincible when it collide with start door
 [*] collision detection of debris - with gates
+[*] make player blink when dies
 [ ] creation of trap from trap source
 [ ] lava tile
 [ ] conveyor belt
 [ ] effect
+[ ] make restart function
 [ ] map decoration, background
 [ ] edit map editor(to put trap, etc..)
 

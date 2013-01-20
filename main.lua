@@ -20,6 +20,9 @@ newtrap(48*3,48*8 + 4,0,0)
 newdebris(48 * 6, 48 * 8, 0)
 endx = 1
 endy = 8
+-- to make player blink
+player["blink"] = true
+player["blinktime"] = 5
 
 function love.load()
 	local a, b
@@ -95,7 +98,9 @@ function love.draw()
 	end
 	
 	--draw player
-	love.graphics.drawq(imgchar, quadchar[(player["direction"] * 4) + 1 + player["motion"]], player["x"], player["y"])
+	if player["blink"] == false then
+		love.graphics.drawq(imgchar, quadchar[(player["direction"] * 4) + 1 + player["motion"]], player["x"], player["y"])
+	end
 	
 	--[[
 	--debug
@@ -233,6 +238,20 @@ function love.update(dt)
 				elseif tbltrap[a]["animation"] == 1 then
 					tbltrap[a]["animation"] = 0
 				end
+			end
+		end
+	end
+	
+	-- blink player
+	if not (player["blinktime"] == 0) then
+		tmrblink = tmrblink + dt
+		if tmrblink >= 0.1 then
+			tmrblink = tmrblink - 0.1
+			player["blinktime"] = player["blinktime"] - 1
+			if player["blink"] == true then
+				player["blink"] = false
+			else
+				player["blink"] = true
 			end
 		end
 	end
