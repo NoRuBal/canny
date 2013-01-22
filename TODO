@@ -6,7 +6,7 @@
 [*] lava tile
 [*] conveyor belt
 [*] creation of trap from trap generator
-[ ] effect
+[*] effect
 [ ] make restart function
 [ ] map decoration, background
 [ ] edit map editor(to put trap, etc..)
@@ -14,6 +14,10 @@
 Bugs:
 [*] when debris chrashes, another debris crashes together.
 [*] if you move debris through fire, debris dosen't get harm
+
+Resource:
+[ ] Explosion -> When Trap/Debris Crashes
+[ ] Spark -> When player Dies, from Debris
 
 Maybe:
 [ ] red conveyor belt move faster

@@ -10,10 +10,12 @@ require "collision" -- detect and respond to collision
 require "map" --about map
 require "trap" --about trap
 require "devices" --about trap
+require "effect" --about effect
 
 init() --init everything.
 loadmap("test.txt") --load example map. "asdf.txt"
-newtrapgen(48 * 5, 48 * 5, 2, 3, 1)
+newtrap(48 * 2, 48 * 8, 0, 0)
+newtrap(48 * 5, 48 * 8, 0, 0)
 -- to make player blink
 player["blink"] = true
 player["blinktime"] = 5
@@ -29,7 +31,8 @@ function love.load()
 	imgtraps = love.graphics.newImage("Graphics/traps.png") --load trap sprite
 	imglava = love.graphics.newImage("Graphics/lava.png") --load trap sprite
 	imgbelt = love.graphics.newImage("Graphics/belt.png") --load belt sprite
-	imgtrapgen = love.graphics.newImage("Graphics/trapgen.png") --load trap generator graphioc
+	imgtrapgen = love.graphics.newImage("Graphics/trapgen.png") --load trap generator graphic
+	imgeffect = love.graphics.newImage("Graphics/effect.png") -- load effect graphic
 	
 	-- quad to draw player
 	quadchar = {}
@@ -70,6 +73,14 @@ function love.load()
 		end
 	end
 	
+	-- quad to draw effects
+	quadeffect = {}
+    for a = 1, 2 do
+		for b = 1, 2 do
+			quadeffect[a * 2 + b - 2] = love.graphics.newQuad(CHARSIZE * (b - 1), CHARSIZE * (a - 1), CHARSIZE, CHARSIZE, CHARSIZE * 2, CHARSIZE * 2)
+		end
+	end
+	
 end
 
 function love.draw()
@@ -102,6 +113,11 @@ function love.draw()
 		end
 	end
 	
+	-- draw belt
+	for a = 1, #tblbelt do
+		love.graphics.drawq(imgbelt, quadbelt[tblbelt[a]["direction"] * 2 + 1 + tblbelt[a]["animation"]], tblbelt[a]["x"], tblbelt[a]["y"])
+	end
+	
 	--draw player
 	if player["blink"] == false then
 		love.graphics.drawq(imgchar, quadchar[(player["direction"] * 4) + 1 + player["motion"]], player["x"], player["y"])
@@ -112,14 +128,16 @@ function love.draw()
 		love.graphics.draw(imglava, tbllava[a]["x"], tbllava[a]["y"])
 	end
 	
-	-- draw belt
-	for a = 1, #tblbelt do
-		love.graphics.drawq(imgbelt, quadbelt[tblbelt[a]["direction"] * 2 + 1 + tblbelt[a]["animation"]], tblbelt[a]["x"], tblbelt[a]["y"])
-	end
-	
 	-- draw trap generator
 	for a = 1, #tbltrapgen do
 		love.graphics.draw(imgtrapgen, tbltrapgen[a]["x"], tbltrapgen[a]["y"])
+	end
+	
+	-- draw effect
+	for a = 1, #tbleffect do
+		if tbleffect[a]["enabled"] == true then
+			love.graphics.drawq(imgeffect, quadeffect[tbleffect[a]["kind"] * 2 + 1 + tbleffect[a]["animation"]], tbleffect[a]["x"], tbleffect[a]["y"])
+		end
 	end
 	
 	--[[
@@ -298,6 +316,17 @@ function love.update(dt)
 				tblbelt[a]["animation"] = 0
 			else
 				tblbelt[a]["animation"] = 1
+			end
+		end
+		
+		for a = 1, #tbleffect do
+			-- 0->1->disappear
+			if tbleffect[a]["enabled"] == true then
+				if tbleffect[a]["animation"] == 0 then
+					tbleffect[a]["animation"] = 1
+				else
+					tbleffect[a]["enabled"] = false
+				end
 			end
 		end
 	end

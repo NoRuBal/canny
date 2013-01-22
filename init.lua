@@ -55,6 +55,15 @@ function init()
 	-- trap generators
 	tbltrapgen = {}
 	
+	-- effect table
+	tbleffect = {}
+	tbleffect[1] = {}
+	tbleffect[1]["enabled"] = false
+	tbleffect[1]["x"] = 0
+	tbleffect[1]["y"] = 0
+	tbleffect[1]["kind"] = 0 -- 0: smoke 1: explosion
+	tbleffect[1]["animation"] = 0 -- 2 frame per animation
+	
 	-- start point and goal
 	-- start point X/Y
 	startx = 0

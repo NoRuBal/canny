@@ -61,9 +61,12 @@ function charmove(direction, speed) --move player.
 		
 		for a = 1, #tbllava do --lava
 			if collcheck(fakex, fakey, CHARSIZE, CHARSIZE, tbllava[a]["x"], tbllava[a]["y"], TILESIZE, TILESIZE) == true then
+				-- effect: player explode
+				neweffect(player["x"], player["y"], 1)
+				
 				player["x"] = startx * 48
 				player["y"] = starty * 48
-				-- eff..
+				
 				player["blink"] = true
 				player["blinktime"] = 5
 				return
@@ -93,9 +96,12 @@ function charmove(direction, speed) --move player.
 		
 		for a = 1, #tbllava do --lava
 			if collcheck(fakex, fakey, CHARSIZE, CHARSIZE, tbllava[a]["x"], tbllava[a]["y"], TILESIZE, TILESIZE) == true then
+				-- effect: player explode
+				neweffect(player["x"], player["y"], 1)
+				
 				player["x"] = startx * 48
 				player["y"] = starty * 48
-				-- eff..
+				
 				player["blink"] = true
 				player["blinktime"] = 5
 				return
@@ -126,9 +132,12 @@ function charmove(direction, speed) --move player.
 		
 		for a = 1, #tbllava do --lava
 			if collcheck(fakex, fakey, CHARSIZE, CHARSIZE, tbllava[a]["x"], tbllava[a]["y"], TILESIZE, TILESIZE) == true then
+				-- effect: player explode
+				neweffect(player["x"], player["y"], 1)
+				
 				player["x"] = startx * 48
 				player["y"] = starty * 48
-				-- eff..
+				
 				player["blink"] = true
 				player["blinktime"] = 5
 				return
@@ -159,9 +168,12 @@ function charmove(direction, speed) --move player.
 		
 		for a = 1, #tbllava do --lava
 			if collcheck(fakex, fakey, CHARSIZE, CHARSIZE, tbllava[a]["x"], tbllava[a]["y"], TILESIZE, TILESIZE) == true then
+				-- effect: player explode
+				neweffect(player["x"], player["y"], 1)
+				
 				player["x"] = startx * 48
 				player["y"] = starty * 48
-				-- eff..
+				
 				player["blink"] = true
 				player["blinktime"] = 5
 				return
@@ -226,7 +238,8 @@ function debmove(direction, speed, index) -- move debris.
 						tbldebris[index]["damage"] = tbldebris[index]["damage"] + 1
 						if tbldebris[index]["damage"] == 3 then
 							tbldebris[index]["enabled"] = false
-							-- maybe eff..
+							-- effect: explode debris
+							neweffect(tbldebris[index]["x"], tbldebris[index]["y"], 1)
 						end
 					end
 					trapcollide(a)
@@ -246,7 +259,8 @@ function debmove(direction, speed, index) -- move debris.
 			if collcheck(fakex, fakey, CHARSIZE, CHARSIZE, tbllava[a]["x"], tbllava[a]["y"], TILESIZE, TILESIZE) == true then
 				tbldebris[index]["enabled"] = false
 				-- maybe eff..
-				
+				-- effect: explode debris
+				neweffect(tbldebris[index]["x"], tbldebris[index]["y"], 1)
 				return
 			end
 		end
@@ -278,7 +292,8 @@ function debmove(direction, speed, index) -- move debris.
 						tbldebris[index]["damage"] = tbldebris[index]["damage"] + 1
 						if tbldebris[index]["damage"] == 3 then
 							tbldebris[index]["enabled"] = false
-							-- maybe eff..
+							-- effect: explode debris
+							neweffect(tbldebris[index]["x"], tbldebris[index]["y"], 1)
 						end
 					end
 					trapcollide(a)
@@ -297,8 +312,8 @@ function debmove(direction, speed, index) -- move debris.
 		for a = 1, #tbllava do --lava
 			if collcheck(fakex, fakey, CHARSIZE, CHARSIZE, tbllava[a]["x"], tbllava[a]["y"], TILESIZE, TILESIZE) == true then
 				tbldebris[index]["enabled"] = false
-				-- maybe eff..
-				
+				-- effect: explode debris
+				neweffect(tbldebris[index]["x"], tbldebris[index]["y"], 1)
 				return
 			end
 		end
@@ -331,7 +346,8 @@ function debmove(direction, speed, index) -- move debris.
 						tbldebris[index]["damage"] = tbldebris[index]["damage"] + 1
 						if tbldebris[index]["damage"] == 3 then
 							tbldebris[index]["enabled"] = false
-							-- maybe eff..
+							-- effect: explode debris
+							neweffect(tbldebris[index]["x"], tbldebris[index]["y"], 1)
 						end
 					end
 					trapcollide(a)
@@ -350,8 +366,8 @@ function debmove(direction, speed, index) -- move debris.
 		for a = 1, #tbllava do --lava
 			if collcheck(fakex, fakey, CHARSIZE, CHARSIZE, tbllava[a]["x"], tbllava[a]["y"], TILESIZE, TILESIZE) == true then
 				tbldebris[index]["enabled"] = false
-				-- maybe eff..
-				
+				-- effect: explode debris
+				neweffect(tbldebris[index]["x"], tbldebris[index]["y"], 1)
 				return
 			end
 		end
@@ -384,7 +400,8 @@ function debmove(direction, speed, index) -- move debris.
 						tbldebris[index]["damage"] = tbldebris[index]["damage"] + 1
 						if tbldebris[index]["damage"] == 3 then
 							tbldebris[index]["enabled"] = false
-							-- maybe eff..
+							-- effect: explode debris
+							neweffect(tbldebris[index]["x"], tbldebris[index]["y"], 1)
 						end
 					end
 					trapcollide(a)
@@ -403,8 +420,8 @@ function debmove(direction, speed, index) -- move debris.
 		for a = 1, #tbllava do --lava
 			if collcheck(fakex, fakey, CHARSIZE, CHARSIZE, tbllava[a]["x"], tbllava[a]["y"], TILESIZE, TILESIZE) == true then
 				tbldebris[index]["enabled"] = false
-				-- maybe eff..
-				
+				-- effect: explode debris
+				neweffect(tbldebris[index]["x"], tbldebris[index]["y"], 1)
 				return
 			end
 		end
@@ -429,9 +446,12 @@ end
 function trapcollide(index) -- when trap collide with tile/player/debris
 	if tbltrap[index]["kind"] == 0 then -- fire
 		tbltrap[index]["enabled"] = false
+		-- smoke effect
+		neweffect(tbltrap[index]["x"], tbltrap[index]["y"], 0)
 	elseif tbltrap[index]["kind"] == 1 then -- proto-cog
-		-- maybe some effs..
 		tbltrap[index]["enabled"] = false
+		-- explosion effect
+		neweffect(tbltrap[index]["x"], tbltrap[index]["y"], 1)
 	elseif tbltrap[index]["kind"] == 2 then -- cog
 		-- switch direction
 		if tbltrap[index]["direction"] == 0 then -- right
@@ -486,7 +506,8 @@ function trapmove(direction, speed, index) --move trap.
 					if tbldebris[a]["damage"] == 3 then
 						tbldebris[a]["enabled"] = false
 						-- maybe eff..
-						print("debris "..a.." disabled")
+						-- effect: explode debris
+						neweffect(tbldebris[a]["x"], tbldebris[a]["y"], 1)
 					end
 					
 					fakey = tbldebris[a]["y"] + CHARSIZE
@@ -499,10 +520,12 @@ function trapmove(direction, speed, index) --move trap.
 		if collcheck(fakex, fakey, CHARSIZE, CHARSIZE, player["x"], player["y"], CHARSIZE, CHARSIZE) == true then
 			fakey = player["y"] + CHARSIZE
 			if collcheck(startx * TILESIZE, starty * TILESIZE, TILESIZE, TILESIZE, player["x"], player["y"], CHARSIZE, CHARSIZE) == false then
+				-- effect: player become debris
+				neweffect(player["x"], player["y"], 0)
 				newdebris(player["x"], player["y"], player["direction"])
 				player["x"] = startx * 48
 				player["y"] = starty * 48
-				-- eff..
+
 				player["blink"] = true
 				player["blinktime"] = 5
 			end
@@ -529,7 +552,8 @@ function trapmove(direction, speed, index) --move trap.
 					tbldebris[a]["damage"] = tbldebris[a]["damage"] + 1
 					if tbldebris[a]["damage"] == 3 then
 						tbldebris[a]["enabled"] = false
-						-- maybe eff..
+						-- effect: explode debris
+						neweffect(tbldebris[a]["x"], tbldebris[a]["y"], 1)
 						print("debris "..a.." disabled")
 					end
 					
@@ -543,10 +567,12 @@ function trapmove(direction, speed, index) --move trap.
 		if collcheck(fakex, fakey, CHARSIZE, CHARSIZE, player["x"], player["y"], CHARSIZE, CHARSIZE) == true then
 			fakey = player["y"] - CHARSIZE
 			if collcheck(startx * TILESIZE, starty * TILESIZE, TILESIZE, TILESIZE, player["x"], player["y"], CHARSIZE, CHARSIZE) == false then
+				-- effect: player become debris
+				neweffect(player["x"], player["y"], 0)
 				newdebris(player["x"], player["y"], player["direction"])
 				player["x"] = startx * 48
 				player["y"] = starty * 48
-				-- eff..
+
 				player["blink"] = true
 				player["blinktime"] = 5
 			end
@@ -575,7 +601,8 @@ function trapmove(direction, speed, index) --move trap.
 					tbldebris[a]["damage"] = tbldebris[a]["damage"] + 1
 					if tbldebris[a]["damage"] == 3 then
 						tbldebris[a]["enabled"] = false
-						-- maybe eff..
+						-- effect: explode debris
+						neweffect(tbldebris[a]["x"], tbldebris[a]["y"], 1)
 						print("debris "..a.." disabled")
 					end
 					
@@ -589,10 +616,13 @@ function trapmove(direction, speed, index) --move trap.
 		 if collcheck(fakex, fakey, CHARSIZE, CHARSIZE, player["x"], player["y"], CHARSIZE, CHARSIZE) == true then
 			fakex = player["x"] + CHARSIZE
 			if collcheck(startx * TILESIZE, starty * TILESIZE, TILESIZE, TILESIZE, player["x"], player["y"], CHARSIZE, CHARSIZE) == false then
+				-- effect: player become debris
+				neweffect(player["x"], player["y"], 0)
+				
 				newdebris(player["x"], player["y"], player["direction"])
 				player["x"] = startx * 48
 				player["y"] = starty * 48
-				-- eff..
+
 				player["blink"] = true
 				player["blinktime"] = 5
 			end
@@ -621,7 +651,8 @@ function trapmove(direction, speed, index) --move trap.
 					tbldebris[a]["damage"] = tbldebris[a]["damage"] + 1
 					if tbldebris[a]["damage"] == 3 then
 						tbldebris[a]["enabled"] = false
-						-- maybe eff..
+						-- effect: explode debris
+						neweffect(tbldebris[a]["x"], tbldebris[a]["y"], 1)
 						print("debris "..a.." disabled")
 					end
 					
@@ -635,10 +666,12 @@ function trapmove(direction, speed, index) --move trap.
 		if collcheck(fakex, fakey, CHARSIZE, CHARSIZE, player["x"], player["y"], CHARSIZE, CHARSIZE) == true then
 			fakex = player["x"] - CHARSIZE
 			if collcheck(startx * TILESIZE, starty * TILESIZE, TILESIZE, TILESIZE, player["x"], player["y"], CHARSIZE, CHARSIZE) == false then
+				-- effect: player become debris
+				neweffect(player["x"], player["y"], 0)
 				newdebris(player["x"], player["y"], player["direction"])
 				player["x"] = startx * 48
 				player["y"] = starty * 48
-				-- eff..
+				
 				player["blink"] = true
 				player["blinktime"] = 5
 			end
