@@ -3,9 +3,10 @@
 [*] player is invincible when it collide with start door
 [*] collision detection of debris - with gates
 [*] make player blink when dies
+[*] lava tile
+[*] conveyor belt
 [ ] creation of trap from trap source
-[ ] lava tile
-[ ] conveyor belt
+[ ] switch & doors
 [ ] effect
 [ ] make restart function
 [ ] map decoration, background
@@ -14,3 +15,7 @@
 Bugs:
 [*] when debris chrashes, another debris crashes together.
 [*] if you move debris through fire, debris dosen't get harm
+
+Maybe:
+[ ] red conveyor belt move faster
+[ ] switch and door

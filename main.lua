@@ -9,17 +9,14 @@ require "debris" -- manage debris
 require "collision" -- detect and respond to collision
 require "map" --about map
 require "trap" --about trap
+require "devices" --about trap
 
 init() --init everything.
-loadmap("asdf.txt") --load example map. "asdf.txt"
-newtrap(48*3,48*1 + 4,2,0)
-newtrap(48*9,48*5 + 4,2,0)
-newtrap(48*10,48*8 + 4,0,0)
-newtrap(48*5,48*8 + 4,0,3)
-newtrap(48*3,48*8 + 4,0,0)
-newdebris(48 * 6, 48 * 8, 0)
-endx = 1
-endy = 8
+loadmap("test.txt") --load example map. "asdf.txt"
+newbelt(48 * 12, 48 * 9, 1)
+newdebris(48 * 12, 48 * 8, 1)
+player.x = 48 * 11
+player.y = 48 * 8
 -- to make player blink
 player["blink"] = true
 player["blinktime"] = 5
@@ -33,6 +30,8 @@ function love.load()
     imgtile = love.graphics.newImage("Graphics/tile.png") --load tile graphic
 	imgpoints = love.graphics.newImage("Graphics/points.png") --load start/goal points
 	imgtraps = love.graphics.newImage("Graphics/traps.png") --load trap sprite
+	imglava = love.graphics.newImage("Graphics/lava.png") --load trap sprite
+	imgbelt = love.graphics.newImage("Graphics/belt.png") --load trap sprite
 	
 	-- quad to draw player
 	quadchar = {}
@@ -62,6 +61,14 @@ function love.load()
     for a = 1, 3 do
 		for b = 1, 2 do
 			quadtrap[a * 2 + b - 2] = love.graphics.newQuad(CHARSIZE * (b - 1), CHARSIZE * (a - 1), CHARSIZE, CHARSIZE, CHARSIZE * 2, CHARSIZE * 3)
+		end
+	end
+	
+	-- quad to draw belts
+	quadbelt = {}
+    for a = 1, 2 do
+		for b = 1, 2 do
+			quadbelt[a * 2 + b - 2] = love.graphics.newQuad(TILESIZE * (b - 1), TILESIZE * (a - 1), TILESIZE, TILESIZE, TILESIZE * 2, TILESIZE * 2)
 		end
 	end
 	
@@ -100,6 +107,16 @@ function love.draw()
 	--draw player
 	if player["blink"] == false then
 		love.graphics.drawq(imgchar, quadchar[(player["direction"] * 4) + 1 + player["motion"]], player["x"], player["y"])
+	end
+	
+	--draw lava
+	for a = 1, #tbllava do
+		love.graphics.draw(imglava, tbllava[a]["x"], tbllava[a]["y"])
+	end
+	
+	-- draw belt
+	for a = 1, #tblbelt do
+		love.graphics.drawq(imgbelt, quadbelt[tblbelt[a]["direction"] * 2 + 1 + tblbelt[a]["animation"]], tblbelt[a]["x"], tblbelt[a]["y"])
 	end
 	
 	--[[
@@ -150,6 +167,37 @@ function love.update(dt)
 				trapmove("up", 100 * dt, a)
 			elseif tbltrap[a]["direction"] == 3 then --down
 				trapmove("down", 100 * dt, a)
+			end
+		end
+	end
+	
+	-- belt
+	-- move player
+	for a = 1, #tblbelt do
+		if collcheck(player["x"], player["y"] + 1, CHARSIZE, CHARSIZE, tblbelt[a]["x"], tblbelt[a]["y"], TILESIZE, TILESIZE) == true then
+			if tblbelt[a]["direction"] == 0 then
+				charmove("right", 90 * dt)
+				break
+			else
+				charmove("left", 90 * dt)
+				break
+			end
+		end
+	end
+	
+	-- move debris
+	for a = 1, #tblbelt do
+		for b = 1, #tbldebris do
+			if tbldebris[b]["enabled"] == true then
+				if collcheck(tbldebris[b]["x"], tbldebris[b]["y"] + 1, CHARSIZE, CHARSIZE, tblbelt[a]["x"], tblbelt[a]["y"], TILESIZE, TILESIZE) == true then
+					if tblbelt[a]["direction"] == 0 then
+						debmove("right", 90 * dt, b)
+					else
+						debmove("left", 90 * dt, b)
+					end
+					-- check collision & player
+					debcollplayer(tblbelt[a]["direction"], b)
+				end
 			end
 		end
 	end
@@ -215,7 +263,7 @@ function love.update(dt)
 		tmrjump = 0
 	end
 	
-	-- change animation of player/trap, 300ms per 1 frame.
+	-- change animation of everything, 300ms per 1 frame.
 	tmranimation = tmranimation + dt
 	if tmranimation >= 0.3 then
 		tmranimation = tmranimation - 0.3
@@ -238,6 +286,15 @@ function love.update(dt)
 				elseif tbltrap[a]["animation"] == 1 then
 					tbltrap[a]["animation"] = 0
 				end
+			end
+		end
+		
+		for a = 1, #tblbelt do
+			--toggle vars 0<->1
+			if tblbelt[a]["animation"] == 1 then
+				tblbelt[a]["animation"] = 0
+			else
+				tblbelt[a]["animation"] = 1
 			end
 		end
 	end

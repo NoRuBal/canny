@@ -46,6 +46,12 @@ function init()
 	tbltrap[1]["direction"] = 0 -- to right:0 to left: 1 to up: 2 to down: 3
 	tbltrap[1]["animation"] = 0 -- Animation. we have 2 frame per one trap.
 	
+	-- lava tables
+	tbllava = {}
+	
+	-- belt tables
+	tblbelt = {}
+	
 	-- start point and goal
 	-- start point X/Y
 	startx = 0

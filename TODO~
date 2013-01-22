@@ -2,12 +2,14 @@
 [*] collision detection of trap
 [*] player is invincible when it collide with start door
 [*] collision detection of debris - with gates
-[ ] creation of trap from trap source
+[*] make player blink when dies
 [ ] lava tile
+[ ] creation of trap from trap source
 [ ] conveyor belt
 [ ] effect
+[ ] make restart function
 [ ] map decoration, background
-[ ] map editor changing
+[ ] edit map editor(to put trap, etc..)
 
 Bugs:
 [*] when debris chrashes, another debris crashes together.

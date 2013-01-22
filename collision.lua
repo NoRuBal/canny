@@ -59,6 +59,17 @@ function charmove(direction, speed) --move player.
 			end
 		end
 		
+		for a = 1, #tbllava do --lava
+			if collcheck(fakex, fakey, CHARSIZE, CHARSIZE, tbllava[a]["x"], tbllava[a]["y"], TILESIZE, TILESIZE) == true then
+				player["x"] = startx * 48
+				player["y"] = starty * 48
+				-- eff..
+				player["blink"] = true
+				player["blinktime"] = 5
+				return
+			end
+		end
+		
 		player["y"] = fakey
 	
 	elseif direction == "down" then
@@ -77,6 +88,17 @@ function charmove(direction, speed) --move player.
 					debmove(direction, fakey - player["y"]  , a)
 					fakey = tbldebris[a]["y"] - CHARSIZE
 				end
+			end
+		end
+		
+		for a = 1, #tbllava do --lava
+			if collcheck(fakex, fakey, CHARSIZE, CHARSIZE, tbllava[a]["x"], tbllava[a]["y"], TILESIZE, TILESIZE) == true then
+				player["x"] = startx * 48
+				player["y"] = starty * 48
+				-- eff..
+				player["blink"] = true
+				player["blinktime"] = 5
+				return
 			end
 		end
 		
@@ -102,6 +124,17 @@ function charmove(direction, speed) --move player.
 			end
 		end
 		
+		for a = 1, #tbllava do --lava
+			if collcheck(fakex, fakey, CHARSIZE, CHARSIZE, tbllava[a]["x"], tbllava[a]["y"], TILESIZE, TILESIZE) == true then
+				player["x"] = startx * 48
+				player["y"] = starty * 48
+				-- eff..
+				player["blink"] = true
+				player["blinktime"] = 5
+				return
+			end
+		end
+		
 		player["x"] = fakex
 		
 	elseif direction == "right" then
@@ -121,6 +154,17 @@ function charmove(direction, speed) --move player.
 					debmove(direction, fakex - player["x"], a)
 					fakex = tbldebris[a]["x"] - CHARSIZE
 				end
+			end
+		end
+		
+		for a = 1, #tbllava do --lava
+			if collcheck(fakex, fakey, CHARSIZE, CHARSIZE, tbllava[a]["x"], tbllava[a]["y"], TILESIZE, TILESIZE) == true then
+				player["x"] = startx * 48
+				player["y"] = starty * 48
+				-- eff..
+				player["blink"] = true
+				player["blinktime"] = 5
+				return
 			end
 		end
 		
@@ -198,6 +242,15 @@ function debmove(direction, speed, index) -- move debris.
 			fakey = endy * 48 + CHARSIZE
 		end
 		
+		for a = 1, #tbllava do --lava
+			if collcheck(fakex, fakey, CHARSIZE, CHARSIZE, tbllava[a]["x"], tbllava[a]["y"], TILESIZE, TILESIZE) == true then
+				tbldebris[index]["enabled"] = false
+				-- maybe eff..
+				
+				return
+			end
+		end
+		
 		tbldebris[index]["y"] = fakey
 	
 	elseif direction == "down" then
@@ -239,6 +292,15 @@ function debmove(direction, speed, index) -- move debris.
 			fakey = starty * 48 - CHARSIZE
 		elseif collcheck(tbldebris[index]["x"], tbldebris[index]["y"], CHARSIZE, CHARSIZE, endx, endy, TILESIZE, TILESIZE) == true then
 			fakey = endy * 48 - CHARSIZE
+		end
+		
+		for a = 1, #tbllava do --lava
+			if collcheck(fakex, fakey, CHARSIZE, CHARSIZE, tbllava[a]["x"], tbllava[a]["y"], TILESIZE, TILESIZE) == true then
+				tbldebris[index]["enabled"] = false
+				-- maybe eff..
+				
+				return
+			end
 		end
 		
 		tbldebris[index]["y"] = fakey
@@ -285,6 +347,15 @@ function debmove(direction, speed, index) -- move debris.
 			fakex = endx * 48 + CHARSIZE
 		end
 		
+		for a = 1, #tbllava do --lava
+			if collcheck(fakex, fakey, CHARSIZE, CHARSIZE, tbllava[a]["x"], tbllava[a]["y"], TILESIZE, TILESIZE) == true then
+				tbldebris[index]["enabled"] = false
+				-- maybe eff..
+				
+				return
+			end
+		end
+		
 		tbldebris[index]["x"] = fakex
 		
 	elseif direction == "right" then
@@ -329,8 +400,29 @@ function debmove(direction, speed, index) -- move debris.
 			fakex = endx * 48 - CHARSIZE
 		end
 		
+		for a = 1, #tbllava do --lava
+			if collcheck(fakex, fakey, CHARSIZE, CHARSIZE, tbllava[a]["x"], tbllava[a]["y"], TILESIZE, TILESIZE) == true then
+				tbldebris[index]["enabled"] = false
+				-- maybe eff..
+				
+				return
+			end
+		end
+		
 		tbldebris[index]["x"] = fakex
 		
+	end
+end
+
+function debcollplayer(direction, index)
+	if direction == 0 then --to right
+		if collcheck(tbldebris[index]["x"], tbldebris[index]["y"], CHARSIZE, CHARSIZE, player["x"], player["y"], CHARSIZE, CHARSIZE) == true then
+			tbldebris[index]["x"] = player["x"] - CHARSIZE
+		end
+	else -- to left
+		if collcheck(tbldebris[index]["x"], tbldebris[index]["y"], CHARSIZE, CHARSIZE, player["x"], player["y"], CHARSIZE, CHARSIZE) == true then
+			tbldebris[index]["x"] = player["x"] + CHARSIZE
+		end
 	end
 end
 
