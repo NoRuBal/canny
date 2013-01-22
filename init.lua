@@ -52,6 +52,9 @@ function init()
 	-- belt tables
 	tblbelt = {}
 	
+	-- trap generators
+	tbltrapgen = {}
+	
 	-- start point and goal
 	-- start point X/Y
 	startx = 0

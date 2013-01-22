@@ -5,8 +5,7 @@
 [*] make player blink when dies
 [*] lava tile
 [*] conveyor belt
-[ ] creation of trap from trap source
-[ ] switch & doors
+[*] creation of trap from trap generator
 [ ] effect
 [ ] make restart function
 [ ] map decoration, background

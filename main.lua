@@ -13,10 +13,7 @@ require "devices" --about trap
 
 init() --init everything.
 loadmap("test.txt") --load example map. "asdf.txt"
-newbelt(48 * 12, 48 * 9, 1)
-newdebris(48 * 12, 48 * 8, 1)
-player.x = 48 * 11
-player.y = 48 * 8
+newtrapgen(48 * 5, 48 * 5, 2, 3, 1)
 -- to make player blink
 player["blink"] = true
 player["blinktime"] = 5
@@ -31,7 +28,8 @@ function love.load()
 	imgpoints = love.graphics.newImage("Graphics/points.png") --load start/goal points
 	imgtraps = love.graphics.newImage("Graphics/traps.png") --load trap sprite
 	imglava = love.graphics.newImage("Graphics/lava.png") --load trap sprite
-	imgbelt = love.graphics.newImage("Graphics/belt.png") --load trap sprite
+	imgbelt = love.graphics.newImage("Graphics/belt.png") --load belt sprite
+	imgtrapgen = love.graphics.newImage("Graphics/trapgen.png") --load trap generator graphioc
 	
 	-- quad to draw player
 	quadchar = {}
@@ -117,6 +115,11 @@ function love.draw()
 	-- draw belt
 	for a = 1, #tblbelt do
 		love.graphics.drawq(imgbelt, quadbelt[tblbelt[a]["direction"] * 2 + 1 + tblbelt[a]["animation"]], tblbelt[a]["x"], tblbelt[a]["y"])
+	end
+	
+	-- draw trap generator
+	for a = 1, #tbltrapgen do
+		love.graphics.draw(imgtrapgen, tbltrapgen[a]["x"], tbltrapgen[a]["y"])
 	end
 	
 	--[[
@@ -310,6 +313,15 @@ function love.update(dt)
 			else
 				player["blink"] = true
 			end
+		end
+	end
+	
+	-- generate trap from trap generator
+	for a = 1, #tbltrapgen do
+		tbltrapgen[a]["timer"] = tbltrapgen[a]["timer"] + dt
+		if tbltrapgen[a]["timer"] >= tbltrapgen[a]["delay"] then
+			tbltrapgen[a]["timer"] = tbltrapgen[a]["timer"] - tbltrapgen[a]["delay"]
+			newtrap(tbltrapgen[a]["x"], tbltrapgen[a]["y"], tbltrapgen[a]["kind"], tbltrapgen[a]["direction"])
 		end
 	end
 end
