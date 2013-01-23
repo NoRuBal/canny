@@ -45,6 +45,8 @@ function loadmap(mappath)
 	endx = tonumber(data[1])
 	endy = tonumber(data[2])
 	
+	-- set trap/devices/and other things
+	
 	-- set player start point
 	player["x"] = startx * 48
 	player["y"] = starty * 48

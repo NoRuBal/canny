@@ -13,9 +13,10 @@ require "devices" --about trap
 require "effect" --about effect
 
 init() --init everything.
-loadmap("test.txt") --load example map. "asdf.txt"
-newtrap(48 * 2, 48 * 8, 0, 0)
-newtrap(48 * 5, 48 * 8, 0, 0)
+loadmap("asdf.txt") --load example map. "asdf.txt"
+newtrap(48 * 5 + 4, 48 * 1 + 4, 0, 0)
+newtrap(48 * 10, 48 * 5, 2, 0)
+newtrap(48 * 2, 48 * 8, 2, 0)
 -- to make player blink
 player["blink"] = true
 player["blinktime"] = 5
@@ -33,6 +34,9 @@ function love.load()
 	imgbelt = love.graphics.newImage("Graphics/belt.png") --load belt sprite
 	imgtrapgen = love.graphics.newImage("Graphics/trapgen.png") --load trap generator graphic
 	imgeffect = love.graphics.newImage("Graphics/effect.png") -- load effect graphic
+	
+	-- background
+	imgback = love.graphics.newImage("Graphics/back_0.png") -- load background graphic
 	
 	-- quad to draw player
 	quadchar = {}
@@ -88,10 +92,15 @@ function love.draw()
 	local b
 	local dbgx, dbgy
 	
+	-- draw background
+	love.graphics.draw(imgback, 0, 0)
+	
 	-- draw tiles
 	for a = 1, 17 do
 		for b = 1, 10 do
-			love.graphics.drawq(imgtile, quadtile[map[a][b] + 1], (a - 1) * TILESIZE, (b - 1) * TILESIZE)
+			if map[a][b] == 1 then
+				love.graphics.drawq(imgtile, quadtile[map[a][b] + 1], (a - 1) * TILESIZE, (b - 1) * TILESIZE)
+			end
 		end
 	end
 	
@@ -246,6 +255,7 @@ function love.update(dt)
 		end
 	end
 	
+	-- gravity
 	tmrgravity = tmrgravity + dt
 	if tmrgravity >= 0.01 then
 		tmrgravity = tmrgravity - 0.01

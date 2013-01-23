@@ -7,17 +7,24 @@
 [*] conveyor belt
 [*] creation of trap from trap generator
 [*] effect
+[*] background
+[ ] decorations
+[ ] ctrl to jump
 [ ] make restart function
-[ ] map decoration, background
 [ ] edit map editor(to put trap, etc..)
+[ ] title screen
+[ ] stage select screen
+[ ] custom map screen
+[ ] credit/...
 
 Bugs:
 [*] when debris chrashes, another debris crashes together.
 [*] if you move debris through fire, debris dosen't get harm
 
 Resource:
-[ ] Explosion -> When Trap/Debris Crashes
-[ ] Spark -> When player Dies, from Debris
+[*] Explosion -> When Trap/Debris Crashes
+[*] Smoke -> When player Dies, from Debris
+[ ] Map background
 
 Maybe:
 [ ] red conveyor belt move faster
