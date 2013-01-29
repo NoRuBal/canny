@@ -8,14 +8,18 @@
 [*] creation of trap from trap generator
 [*] effect
 [*] background
-[ ] decorations
-[ ] ctrl to jump
-[ ] make restart function
-[ ] edit map editor(to put trap, etc..)
-[ ] title screen
-[ ] stage select screen
-[ ] custom map screen
-[ ] credit/...
+[*] ctrl to jump
+[*] make restart function
+[*] display control info at first stage
+[*] edit map editor(to put trap, etc..)
+[*] title screen
+[*] load each level by password
+[*] level title screen
+[*] pause
+[*] opening screen
+[ ] credit
+[ ] ending credit
+[ ] boss battle
 
 Bugs:
 [*] when debris chrashes, another debris crashes together.
@@ -24,7 +28,7 @@ Bugs:
 Resource:
 [*] Explosion -> When Trap/Debris Crashes
 [*] Smoke -> When player Dies, from Debris
-[ ] Map background
+[*] Map background
 
 Maybe:
 [ ] red conveyor belt move faster

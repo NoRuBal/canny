@@ -4,10 +4,6 @@
 -------------------------------------
 
 function init()
-	-- constants, don't change in game!
-	TILESIZE = 48
-	CHARSIZE = 40
-
 	-- map table
 	map = {}
 	for a = 1, 17 do
@@ -23,7 +19,7 @@ function init()
 	player["y"] = 300
 	player["jump"] = false --jumping?
 	player["direction"] = 0 --heading left: 0 head right:1
-	player["motion"] = 0 --motion for animation. 0:stopped 1: right foot 2:stopped 3: left foot
+	player["motion"] = 0 --motion for animation. 0:stopped 1: right foot 2:stopped 3: left foot, tmp used for finish move.
 	player["blink"] = false
 	player["blinktime"] = 0
 
@@ -72,6 +68,12 @@ function init()
 	-- goal X/Y
 	endx = 0
 	endy = 0
+	
+	-- other switch related gameplay
+	pause = false
+	finished = false
+	tmrfinish = 0
+	confinish = 0
 
 	-- timers
 	tmrgravity = 0
