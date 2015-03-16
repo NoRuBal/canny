@@ -5,6 +5,16 @@
 
 function neweffect(x, y, kind) --kind: 0-smoke 1-explode
 	-- make new effect
+	if kind == 0 then
+		if mute == false then
+			love.audio.play(tblse[5])
+		end
+	elseif kind == 1 then
+		if mute == false then
+			love.audio.play(tblse[4])
+		end
+	end
+	
 	local a
 	for a = 1, #tbleffect do
 		-- find not-enabled effect

@@ -7,6 +7,34 @@ function startstage(stage) -- start stage, display stage title screen.
 	init()
 	scene = 5
 	currentstage = stage
+	love.audio.stop()
+	if mute == false then
+		tblbgm[2] = love.audio.newSource("Sound/bgm/stagetitle.ogg", "stream")
+		tblbgm[2]:setLooping(true)
+		love.audio.play(tblbgm[2])
+	end
+	if mute == true then
+		love.audio.pause()
+	end
+	
+	if stage == 25 then --final battle
+		corecorruption = 0
+		
+		tbltmptrap = {}
+		tbltmptrap[1] = {}
+		tbltmptrap[1]["x"] = 0
+		tbltmptrap[1]["y"] = 0
+		tbltmptrap[1]["enabled"] = false
+		
+		tmrbossatk = 0
+		tmrbossend = 0
+		bosscont = 0
+		
+		bossdefeated = false
+	end
+	
+	tmpkeydelay = nil
+	tmpkeydelay = 0
 end
 
 function loadmap(mappath)
@@ -77,6 +105,7 @@ function loadmap(mappath)
 		objdata = {}
 		objdata = split(data[a], "/")
 		newtrapgen(tonumber(objdata[1]), tonumber(objdata[2]), tonumber(objdata[3]), tonumber(objdata[4]), tonumber(objdata[5]))
+		print(tonumber(objdata[4]))
 	end
 	
 	-- set traps

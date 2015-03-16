@@ -183,6 +183,27 @@ function charmove(direction, speed) --move player.
 		player["x"] = fakex
 		
 	end
+	
+	-- collision with boss
+	if currentstage == 25 then
+		if collcheck(fakex, fakey, CHARSIZE, CHARSIZE, 48 * 11, 48 * 7, 144, 96) == true then
+			-- effect: player explode
+			neweffect(player["x"], player["y"], 1)
+			
+			corecorruption = corecorruption + 5
+			if corecorruption >= 100 then
+				bossdefeated = true
+				love.audio.stop()
+			end
+			
+			player["x"] = startx * 48
+			player["y"] = starty * 48
+			
+			player["blink"] = true
+			player["blinktime"] = 5
+			return
+		end
+	end
 end
 
 function collcheck(pic1x, pic1y, pic1width, pic1height, pic2x, pic2y, pic2width, pic2height)
@@ -230,6 +251,7 @@ function debmove(direction, speed, index) -- move debris.
 			end
 		end
 		
+		--[[
 		-- no collision with traps
 		for a = 1, #tbltrap do
 			if tbltrap[a]["enabled"] == true then
@@ -247,6 +269,7 @@ function debmove(direction, speed, index) -- move debris.
 				end
 			end
 		end
+		]]--
 		
 		-- no collision with doors
 		if collcheck(tbldebris[index]["x"], tbldebris[index]["y"], CHARSIZE, CHARSIZE, startx, starty, TILESIZE, TILESIZE) == true then
@@ -284,6 +307,7 @@ function debmove(direction, speed, index) -- move debris.
 			end
 		end
 		
+		--[[
 		-- no collision with traps
 		for a = 1, #tbltrap do
 			if tbltrap[a]["enabled"] == true then
@@ -301,6 +325,7 @@ function debmove(direction, speed, index) -- move debris.
 				end
 			end
 		end
+		]]--
 		
 		-- no collision with doors
 		if collcheck(tbldebris[index]["x"], tbldebris[index]["y"], CHARSIZE, CHARSIZE, startx, starty, TILESIZE, TILESIZE) == true then
@@ -338,6 +363,7 @@ function debmove(direction, speed, index) -- move debris.
 			end
 		end
 		
+		--[[
 		-- no collision with traps
 		for a = 1, #tbltrap do
 			if tbltrap[a]["enabled"] == true then
@@ -355,6 +381,7 @@ function debmove(direction, speed, index) -- move debris.
 				end
 			end
 		end
+		]]--
 		
 		-- no collision with doors
 		if collcheck(tbldebris[index]["x"], tbldebris[index]["y"], CHARSIZE, CHARSIZE, startx, starty, TILESIZE, TILESIZE) == true then
@@ -392,6 +419,7 @@ function debmove(direction, speed, index) -- move debris.
 			end
 		end
 		
+		--[[
 		-- no collision with traps
 		for a = 1, #tbltrap do
 			if tbltrap[a]["enabled"] == true then
@@ -409,6 +437,7 @@ function debmove(direction, speed, index) -- move debris.
 				end
 			end
 		end
+		]]--
 		
 		-- no collision with doors
 		if collcheck(tbldebris[index]["x"], tbldebris[index]["y"], CHARSIZE, CHARSIZE, startx, starty, TILESIZE, TILESIZE) == true then
@@ -429,6 +458,24 @@ function debmove(direction, speed, index) -- move debris.
 		tbldebris[index]["x"] = fakex
 		
 	end
+	
+	-- with boss
+	if currentstage == 25 then
+		if bossdefeated == false then
+			if collcheck(fakex, fakey, CHARSIZE, CHARSIZE, 48 * 11, 48 * 7, 144, 96) == true then
+				corecorruption = corecorruption + 20
+				tbldebris[index]["enabled"] = false
+				-- effect: explode debris
+				neweffect(tbldebris[index]["x"], tbldebris[index]["y"], 1)
+				
+				if corecorruption >= 100 then
+					bossdefeated = true
+					love.audio.stop()
+				end
+				return
+			end
+		end
+	end
 end
 
 function debcollplayer(direction, index)
@@ -436,9 +483,13 @@ function debcollplayer(direction, index)
 		if collcheck(tbldebris[index]["x"], tbldebris[index]["y"], CHARSIZE, CHARSIZE, player["x"], player["y"], CHARSIZE, CHARSIZE) == true then
 			tbldebris[index]["x"] = player["x"] - CHARSIZE
 		end
-	else -- to left
+	elseif direction == 1 then -- to left
 		if collcheck(tbldebris[index]["x"], tbldebris[index]["y"], CHARSIZE, CHARSIZE, player["x"], player["y"], CHARSIZE, CHARSIZE) == true then
 			tbldebris[index]["x"] = player["x"] + CHARSIZE
+		end
+	elseif direction ==3 then -- to down
+		if collcheck(tbldebris[index]["x"], tbldebris[index]["y"], CHARSIZE, CHARSIZE, player["x"], player["y"], CHARSIZE, CHARSIZE) == true then
+			tbldebris[index]["y"] = player["y"] - CHARSIZE
 		end
 	end
 end
@@ -512,6 +563,7 @@ function trapmove(direction, speed, index) --move trap.
 					
 					fakey = tbldebris[a]["y"] + CHARSIZE
 					trapcollide(index)
+					return
 				end
 			end
 		end
@@ -528,6 +580,7 @@ function trapmove(direction, speed, index) --move trap.
 
 				player["blink"] = true
 				player["blinktime"] = 5
+				print("player become debris, "..direction)
 			end
 			trapcollide(index)
 		 end
@@ -559,6 +612,7 @@ function trapmove(direction, speed, index) --move trap.
 					
 					fakey = tbldebris[a]["y"] - CHARSIZE
 					trapcollide(index)
+					return
 				end
 			end
 		end
@@ -575,6 +629,7 @@ function trapmove(direction, speed, index) --move trap.
 
 				player["blink"] = true
 				player["blinktime"] = 5
+				print("player become debris, "..direction)
 			end
 			trapcollide(index)
 		 end
@@ -608,6 +663,7 @@ function trapmove(direction, speed, index) --move trap.
 					
 					fakex = tbldebris[a]["x"] + CHARSIZE
 					trapcollide(index)
+					return
 				end
 			end
 		end
@@ -625,6 +681,7 @@ function trapmove(direction, speed, index) --move trap.
 
 				player["blink"] = true
 				player["blinktime"] = 5
+				print("player become debris, "..direction)
 			end
 			trapcollide(index)
 		 end
@@ -658,6 +715,7 @@ function trapmove(direction, speed, index) --move trap.
 					
 					fakex = tbldebris[a]["x"] - CHARSIZE
 					trapcollide(index)
+					return
 				end
 			end
 		end
